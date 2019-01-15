@@ -18,7 +18,7 @@ class UserAdmin(BaseUserAdmin):
     )
 
     fieldsets = (
-        (None, {'fields': ('mobile', 'password')}),
+        (None, {'fields': ('mobile', 'password', 'name')}),
         ('权限', {'fields': ('is_active', 'is_staff', 'is_superuser',)}),
         ('重要日期', {'fields': ('last_login',)}),
     )

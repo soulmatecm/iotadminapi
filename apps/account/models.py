@@ -49,6 +49,14 @@ class User(TimestampMixin, PermissionsMixin, AbstractBaseUser):
         validators=[MobileValidator, ]
     )
 
+    name = models.CharField(
+        '姓名',
+        max_length=32,
+        unique=True,
+        null=True,
+        blank=True
+    )
+
     is_active = models.BooleanField(
         '有效',
         default=True,
