@@ -52,6 +52,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -146,7 +147,7 @@ REST_FRAMEWORK = {
         'rest_framework.renderers.JSONRenderer',
         'rest_framework.renderers.BrowsableAPIRenderer',
     ),
-    'DEFAULT_PAGINATION_CLASS': 'base.paginators.PageLimitPagination',
+    'DEFAULT_PAGINATION_CLASS': 'common.paginators.PageLimitPagination',
 }
 
 # JSON WebToken相关配置
@@ -155,5 +156,5 @@ JWT_AUTH = {
     'JWT_ALLOW_REFRESH': True,
     'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=30),
     'JWT_AUTH_HEADER_PREFIX': 'token',
-    'JWT_RESPONSE_PAYLOAD_HANDLER': 'base.jwt.jwt_response_payload_handler',
+    'JWT_RESPONSE_PAYLOAD_HANDLER': 'common.jwt.jwt_response_payload_handler',
 }

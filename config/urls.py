@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework_jwt.views import verify_jwt_token, refresh_jwt_token, obtain_jwt_token
 
-from .api_routers import router
+from .apirouters import router
 
 urlpatterns = [
     path('', include(router.urls)),

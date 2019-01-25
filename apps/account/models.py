@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
 from django.core.validators import RegexValidator
-from base.models import TimestampMixin
+from common.models import TimestampMixin
 
 #  手机号码规则校验
 #  需要根据最新的各运营商手机号规则编写
