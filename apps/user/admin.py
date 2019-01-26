@@ -14,7 +14,7 @@ class UserAdmin(BaseUserAdmin):
     change_password_form = AdminPasswordChangeForm
 
     list_display = (
-        'mobile', 'create_time', 'is_active', 'is_staff', 'is_superuser',
+        'mobile', 'name', 'last_login', 'is_active', 'is_staff', 'is_superuser',
     )
 
     fieldsets = (

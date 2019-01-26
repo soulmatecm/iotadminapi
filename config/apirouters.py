@@ -1,7 +1,6 @@
 from rest_framework import routers
-from account.views import UserViewset
-from product.views import ProductViewSet
-from device.views import DeviceViewSet
+from user.views import UserViewset
+from device.views import DeviceViewSet, ProductViewSet
 
 router = routers.DefaultRouter()
 router.register('users', UserViewset)

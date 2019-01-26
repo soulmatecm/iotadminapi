@@ -44,9 +44,8 @@ INSTALLED_APPS = [
     'django_filters',
     'corsheaders',
 
-    'account',
+    'user',
     'device',
-    'product',
 ]
 
 MIDDLEWARE = [
@@ -127,7 +126,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-AUTH_USER_MODEL = 'account.User'
+AUTH_USER_MODEL = 'user.User'
 
 CORS_ORIGIN_ALLOW_ALL = True
 

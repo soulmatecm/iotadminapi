@@ -4,8 +4,21 @@ import random
 
 
 class Device(TimestampMixin, models.Model):
-    name = models.CharField('产品名称', max_length=32, unique=True, null=True, blank=True)
+    DEVICE_STATUS_CHOICES = (
+        (1, '未激活'),
+        (2, '离线'),
+        (3, '在线'),
+    )
+    name = models.CharField('设备名称', max_length=32, unique=True, null=True, blank=True,
+                            help_text='设备名可以为空，如果为空，系统将颁发全局唯一标识符作为设备名')
     device_secret = models.CharField('device secret', max_length=16, unique=True, editable=False)
+    product = models.ForeignKey(
+        'device.Product',
+        verbose_name='所属产品',
+        on_delete=models.PROTECT
+    )
+    status = models.PositiveSmallIntegerField('设备状态', choices=DEVICE_STATUS_CHOICES, default=1)
+    last_login = models.DateTimeField('最后上线时间', editable=False, blank=True, null=True)
 
     @staticmethod
     def generate_random_string(length):
@@ -31,10 +44,17 @@ class Device(TimestampMixin, models.Model):
             while self.__class__.objects.filter(device_secret=randstr).count():
                 randstr = self.__class__.generate_random_string(16)
             self.device_secret = randstr
+
+        if not self.name:
+            randstr = self.__class__.generate_random_string(11)
+            while self.__class__.objects.filter(name=randstr).count():
+                randstr = self.__class__.generate_random_string(11)
+            self.name = randstr
+
         super().save(*args, **kwargs)
 
-    # def __str__(self):
-    #     return self.name
+    def __str__(self):
+        return self.name
 
     class Meta:
         verbose_name = '设备'

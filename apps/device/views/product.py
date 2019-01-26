@@ -1,11 +1,12 @@
 from rest_framework import viewsets
-from .models import Product
-from .serializers import ProductSerializer, ProductSecretSerializer
 from django_filters import rest_framework as filters
-from .filters import ProductFilter
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
+
+from ..serializers import ProductSerializer, ProductSecretSerializer
+from ..models import Product
+from ..filters import ProductFilter
 
 
 class ProductViewSet(viewsets.ModelViewSet):
