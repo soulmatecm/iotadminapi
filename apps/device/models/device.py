@@ -1,6 +1,6 @@
 from django.db import models
 from common.models import TimestampMixin
-import random
+from ..utils import generate_random_string
 
 
 class Device(TimestampMixin, models.Model):
@@ -15,40 +15,33 @@ class Device(TimestampMixin, models.Model):
     product = models.ForeignKey(
         'device.Product',
         verbose_name='所属产品',
-        on_delete=models.PROTECT
+        on_delete=models.PROTECT,
+        related_name='owned_devices'
+    )
+    group = models.ForeignKey(
+        'device.Group',
+        verbose_name='所属分组',
+        null=True,
+        blank=True,
+        on_delete=models.PROTECT,
+        related_name='owned_devices'
     )
     status = models.PositiveSmallIntegerField('设备状态', choices=DEVICE_STATUS_CHOICES, default=1)
     last_login = models.DateTimeField('最后上线时间', editable=False, blank=True, null=True)
-
-    @staticmethod
-    def generate_random_string(length):
-        """生成随机字符串
-        """
-        raw = ''
-        range1 = range(58, 65)  # between 0~9 and A~Z
-        range2 = range(91, 97)  # between A~Z and a~z
-        i = 0
-        while i < length:
-            seed = random.randint(48, 122)
-            if seed in range1 or seed in range2:
-                continue
-            raw += chr(seed)
-            i += 1
-        return raw
 
     def save(self, *args, **kwargs):
         """创建时，为设备生成secret
         """
         if not self.device_secret:
-            randstr = self.__class__.generate_random_string(16)
+            randstr = generate_random_string(16)
             while self.__class__.objects.filter(device_secret=randstr).count():
-                randstr = self.__class__.generate_random_string(16)
+                randstr = generate_random_string(16)
             self.device_secret = randstr
 
         if not self.name:
-            randstr = self.__class__.generate_random_string(11)
+            randstr = generate_random_string(11)
             while self.__class__.objects.filter(name=randstr).count():
-                randstr = self.__class__.generate_random_string(11)
+                randstr = generate_random_string(11)
             self.name = randstr
 
         super().save(*args, **kwargs)

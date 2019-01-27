@@ -3,9 +3,17 @@ from ..models import Product
 
 
 class ProductSerializer(serializers.ModelSerializer):
+    device_count = serializers.SerializerMethodField()
+
+    def get_device_count(self, instance):
+        """获取产品下面的设备数量
+        """
+        return instance.owned_devices.count()
+
     class Meta:
         model = Product
-        fields = '__all__'
+        fields = (
+            'id', 'name', 'version', 'product_key', 'product_secret', 'product_desc', 'device_count', 'create_time',)
         read_only_fields = ('product_key', 'product_secret',)
 
 
